@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const bcrypt =  require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const Expense = require('./expense')
@@ -24,36 +24,34 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
         lowercase: true,
-        validate(email){
-            if(! validator.isEmail(email)) {
+        validate(email) {
+            if (!validator.isEmail(email)) {
                 throw new Error('Email is invalids')
             }
         }
     },
-    password:{
+    password: {
         type: String,
         required: true,
-        trim:true,
-        minlength:[6, 'Must be larger than 6 characters'],
+        trim: true,
+        minlength: [6, 'Must be larger than 6 characters'],
         validate(pw) {
-            if(pw.toLowerCase().includes('password')){
+            if (pw.toLowerCase().includes('password')) {
                 throw new Error('Password cannot be equal password')
             }
         }
     },
-    tokens: [
-        {
-            token: {
-                type:String,
-                required:true
-            }
+    tokens: [{
+        token: {
+            type: String,
+            required: true
         }
-    ]
-},{
+    }]
+}, {
     timestamps: true
 })
 
-userSchema.methods.toJSON = function () {
+userSchema.methods.toJSON = function() {
     const user = this
     const userObject = user.toObject()
 
@@ -65,17 +63,17 @@ userSchema.methods.toJSON = function () {
 
 userSchema.methods.generateAuthToken = async function() {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() } , process.env.JWT_SECRET)
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
 
-    user.tokens = user.tokens.concat({token})
+    user.tokens = user.tokens.concat({ token })
 
     await user.save()
 
     return token
 }
 
-userSchema.statics.findByCredentials = async (email, password) => {
+userSchema.statics.findByCredentials = async(email, password) => {
 
     const user = await User.findOne({ email })
 
@@ -85,7 +83,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
 
-    if(!isMatch) {
+    if (!isMatch) {
         throw new Error('Unable to login')
     }
 
@@ -94,7 +92,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 // Hash the plain text password before save
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function(next) {
     const user = this
 
     if (user.isModified('password')) {
@@ -106,12 +104,12 @@ userSchema.pre('save', async function (next) {
 
 // Delete user info when user is removed
 
-userSchema.pre('remove', async function (next) {
+userSchema.pre('remove', async function(next) {
     const user = this
 
-    await Income.deleteMany({owner: user._id})
-    await Category.deleteMany({owner: user._id})
-    await Expense.deleteMany({owner: user._id})
+    await Income.deleteMany({ user: user._id })
+    await Category.deleteMany({ user: user._id })
+    await Expense.deleteMany({ user: user._id })
 
     next()
 })
