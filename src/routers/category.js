@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../middleware/auth')
+
 const categoryController = require('../controllers/category')
 
 const router = new express.Router()
@@ -14,7 +15,8 @@ router.post('/categories', auth, async(req, res) => {
 
 router.get('/categories', auth, async(req, res) => {
     try {
-        res.status(200).send(await categoryController.getCategories(req.user))
+        const categories = await categoryController.getCategories(req.user)
+        res.render('partials/transactionTabs', { categories })
     } catch (e) {
         res.status(400).send(e.message)
     }

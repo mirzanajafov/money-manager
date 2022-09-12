@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const { sendWelcomeEmail } = require('../emails/account');
 const utils = require('../utils/utils')
+const bcrypt = require('bcryptjs');
 
 const createUser = async(body) => {
 
@@ -41,9 +42,23 @@ const getUserProfile = async(user) => {
 }
 
 const updateUserProfile = async(user, body) => {
-    const updates = utils.checkUpdateFields(body, ['FirstName', 'LastName', 'email', 'password'])
+    const updates = utils.checkUpdateFields(body, ['FirstName', 'LastName', 'email'])
 
     updates.forEach((update) => user[update] = body[update])
+    await user.save()
+
+    return user
+}
+
+const updateUserPassword = async(user, body) => {
+    const isMatch = await bcrypt.compare(body.oldPass, user.password)
+
+    if (!isMatch) {
+        throw new Error('Ex Password is wrong')
+    }
+
+    user.password = body.password
+
     await user.save()
 
     return user
@@ -60,5 +75,6 @@ module.exports = {
     logoutAll,
     getUserProfile,
     updateUserProfile,
-    removeUser
+    removeUser,
+    updateUserPassword
 }

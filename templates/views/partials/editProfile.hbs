@@ -1,0 +1,56 @@
+<div class="z-50 antialiased hidePopup fixed w-full text-gray-900 font-sans overflow-x-hidden" id="editProfilePopup">
+  <div class="relative  px-4 min-h-screen md:flex flex items-center md:items-center md:justify-center">
+    <div class="bg-black opacity-25 w-full h-full absolute z-10 inset-0"></div>
+    <div class="bg-white rounded-lg min-w-[40%] md:mx-auto p-4 fixed inset-x-0   z-50 mb-4 mx-4 md:relative">
+    
+        <div class="p-5 bg-white md:flex-1">
+          <h3 class="my-4 text-2xl font-semibold text-gray-700">Edit Profile</h3>
+          <form action="#" class="flex flex-col space-y-5">
+            <div class="flex flex-col space-y-1">
+              <label for="editEmail" class="text-sm font-semibold text-gray-500">Email address</label>
+              <input type="email" value="{{user.email}}" 
+               data-required="true"
+                data-validateas="email"
+                data-label="Email"
+              id="editEmail" autofocus="" class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200">
+            </div>
+                <div class="flex flex-col space-y-1">
+              <label for="editFname" class="text-sm font-semibold text-gray-500">First Name</label>
+              <input
+                type="text"
+                id="editFname"
+                 data-required="true"
+                data-validateas="text"
+                data-label="Fee"
+                value="{{user.FirstName}}"
+                class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+              />
+            </div>
+               <div class="flex flex-col space-y-1">
+              <label for="editLname" class="text-sm font-semibold text-gray-500">Last Name</label>
+              <input
+                type="text"
+                id="editLname"
+                 data-required="true"
+                data-validateas="text"
+                data-label="Fee"
+                value="{{user.LastName}}"
+                class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+              />
+            </div>
+           
+            <div >
+              <button type="button" id="submitEditProfile" class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4">
+                Save
+              </button>
+            </div>
+        <div>
+              <button type="button" id="cancelEditProfile" class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-red-500 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-blue-200 focus:ring-4">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>

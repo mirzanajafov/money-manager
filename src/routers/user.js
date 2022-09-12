@@ -7,23 +7,45 @@ const router = new express.Router()
 router.post('/users', async(req, res) => {
 
     try {
-        res.status(201).send(await UserController.createUser(req.body))
+        const user = await UserController.createUser(req.body)
+
+        req.session.user = user.user
+        req.session.userToken = user.token
+        res.status(201).send({
+            msg: 'success',
+            error: false,
+        })
     } catch (e) {
-        res.status(400).send(e.message)
+        res.status(400).send({
+            error: true,
+            msg: e.message
+        })
     }
 })
 
 router.post('/users/login', async(req, res) => {
     try {
-        res.send(await UserController.login(req.body.email, req.body.password))
-    } catch {
-        res.status(400).send(e.message)
+
+        const user = await UserController.login(req.body.email, req.body.password)
+        req.session.user = user.user
+        req.session.userToken = user.token
+
+        res.status(200).send({
+            msg: 'success',
+            error: false,
+        })
+    } catch (e) {
+        res.status(400).send({
+            error: true,
+            msg: e.message
+        })
     }
 })
 
 router.post('/users/logout', auth, async(req, res) => {
     try {
         await UserController.logout(req.user, req.token)
+        req.session.destroy()
         res.status(200).send('Logout successfully')
     } catch (e) {
         res.status(500).send(e)
@@ -48,7 +70,22 @@ router.patch('/users', auth, async(req, res) => {
         await UserController.updateUserProfile(req.user, req.body)
         res.send(req.user)
     } catch (e) {
-        res.status(400).send(e.message)
+        res.status(400).send({
+            error: true,
+            msg: e.message
+        })
+    }
+})
+
+router.patch('/users/password', auth, async(req, res) => {
+    try {
+        await UserController.updateUserPassword(req.user, req.body)
+        res.send(req.user)
+    } catch (e) {
+        res.status(400).send({
+            error: true,
+            msg: e.message
+        })
     }
 })
 

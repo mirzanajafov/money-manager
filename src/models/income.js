@@ -11,6 +11,10 @@ const incomeSchema = new mongoose.Schema({
         required: true,
         ref: 'Category'
     },
+    type: {
+        type: String,
+        default: 'Income'
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

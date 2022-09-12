@@ -1,0 +1,74 @@
+{{>header}}
+<div class="flex flex-col flex-1 h-full overflow-hidden">
+        <!-- Navbar -->
+        <header class="flex-shrink-0 border-b">
+          <div class="flex items-center justify-end p-2">
+            <!-- Navbar right -->
+            <div class="relative flex items-center space-x-3">
+              <!-- Search button -->
+              <button  class="p-2 bg-gray-100 rounded-full md:hidden focus:outline-none focus:ring hover:bg-gray-200">
+                <svg class="w-6 h-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </button>
+
+             
+        
+
+              <!-- avatar button -->
+              <div class="relative" x-data="{ isOpen: false }">
+                <button class="p-1 bg-gray-200 rounded-full focus:outline-none focus:ring" id="openUserProf">
+                  <img class="object-cover w-8 h-8 rounded-full" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png" alt="Ahmed Kamel">
+                </button>
+                <!-- green dot -->
+                <div class="absolute right-0 p-1 bg-green-400 rounded-full bottom-3 animate-ping"></div>
+                <div class="absolute right-0 p-1 bg-green-400 border border-white rounded-full bottom-3"></div>
+
+                <!-- Dropdown card -->
+                <div  id="userProf" class=" z-40 absolute mt-3 transform -translate-x-full bg-white rounded-md shadow-lg min-w-max hidePopup" >
+                  <div class="flex flex-col p-4 space-y-1 font-medium border-b">
+                    <span class="text-gray-800">{{user.FirstName}} {{user.LastName}}</span>
+                    <span class="text-sm text-gray-400">{{user.email}}</span>
+                  </div>
+                  <ul class="flex flex-col p-2 my-2 space-y-1">
+                    <li>
+                      <a href="#" class="block px-2 py-1 transition rounded-md hover:bg-gray-100" id="editProfileBtn">Edit Profile</a>
+                    </li>
+                    <li>
+                      <a href="#" class="block px-2 py-1 transition rounded-md hover:bg-gray-100" id="updatePasswordBtn">Update Password</a>
+                    </li>
+                    <li>
+                      <a href="#" id="removeAccBtn" class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Remove Account</a>
+                    </li>
+                  </ul>
+                  <div class="flex items-center justify-center p-4 text-blue-700 underline border-t">
+                    <a href="#" id="logoutBtn">Logout</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- Main content -->
+        <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll">
+
+          <!-- Start Content -->
+        {{>total  Balance = TotalBalance}}
+
+              <div class='add-btn-container relative'>
+        <div class='add-btn-wrapper fixed right-8 mt-4'>
+            <div id="addTransactionBtn" class="add-btn add-btn-main rounded-full transition-colors duration-300 hover:bg-blue-600 focus:ring-blue-200 focus:ring-4 bg-blue-500  text-white cursor-pointer w-12 h-12 flex items-center justify-center border text-3xl font-semibold transition-shadow shadow-sm hover:shadow-lg" style="font-family: ui-serif;">
+                +
+            </div>
+        </div>
+    </div>
+        {{>history}}
+        </main>
+     {{>removeAccModal}}
+     {{>editProfile user=user}}
+     {{>updatePassword}}
+     {{>logoutPopup}}
+     {{>addTransaction}}
+      </div>
+         <!-- Main footer -->
+{{>footer}}   

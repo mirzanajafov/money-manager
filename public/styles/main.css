@@ -1,0 +1,35 @@
+.hidePopup {
+    display: none !important;
+}
+
+.icon-fs {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+}
+
+.transPopupTab.active {
+    --tw-text-opacity: 1;
+    color: rgb(37 99 235 / var(--tw-text-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #e7e6e2;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #dbd8d8;
+    border-radius: 100vh;
+    border: 3px solid #dbd8d8;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a8a7a8;
+}
