@@ -27,7 +27,7 @@ const TotalExpense = async(user) => {
         }
     ])
 
-    return total[0].total
+    return total[0]?.total ?? 0
 }
 
 const TotalIncome = async(user) => {
@@ -44,7 +44,7 @@ const TotalIncome = async(user) => {
         }
     ])
 
-    return total[0].total
+    return total[0]?.total ?? 0
 }
 
 const TotalBalance = async(user) => {
